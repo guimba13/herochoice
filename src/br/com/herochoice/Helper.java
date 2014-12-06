@@ -31,7 +31,7 @@ public class Helper {
 			character.setHero(b[2].equals("hero") ? true : false);
 			character.setIntelligence(Integer.parseInt(b[3]));
 			character.setStrength(Integer.parseInt(b[4]));
-			character.setSpeedy(Integer.parseInt(b[5]));
+			character.setSpeed(Integer.parseInt(b[5]));
 			character.setDurability(Integer.parseInt(b[6]));
 			character.setEnergy(Integer.parseInt(b[7]));
 			character.setFightingSkills(Integer.parseInt(b[8]));

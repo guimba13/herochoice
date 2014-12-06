@@ -5,14 +5,18 @@ public class Character {
 	private int id;
 	private String name;
 	private boolean hero;
-	private int intelligence;
-	private int strength;
-	private int speedy;
-	private int durability;
-	private int energy;
-	private int fightingSkills;
-	private int numberComics;
+	private Integer intelligence;
+	private Integer strength;
+	private Integer speed;
+	private Integer durability;
+	private Integer energy;
+	private Integer fightingSkills;
+	private Integer numberComics;
 
+	public Integer getPgMed(){
+		return (intelligence + strength + speed + durability + energy + fightingSkills) / 6;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -85,11 +89,11 @@ public class Character {
 		this.fightingSkills = fightingSkills;
 	}
 
-	public int getSpeedy() {
-		return speedy;
+	public int getSpeed() {
+		return speed;
 	}
 
-	public void setSpeedy(int speedy) {
-		this.speedy = speedy;
+	public void setSpeed(int speed) {
+		this.speed = speed;
 	}
 }
