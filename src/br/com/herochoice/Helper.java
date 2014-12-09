@@ -14,6 +14,7 @@ public class Helper {
 	public static Double budget;
 	public static List<Character> characters;
 	public static Relation relations[][];
+	public static Team villains;
 
 	public static List<Character> readCharacter() throws IOException {
 		br = new BufferedReader(new FileReader("character.csv"));
@@ -191,7 +192,23 @@ public class Helper {
 		return sol;
 	}
 	
-	public static Boolean isValidSolution(Team heroes){
+	public static boolean isValidSolution(Team heroes){
+		if(heroes.getCost() > budget){
+			return false;
+		}
+		if(heroes.getDurability() < Helper.villains.getDurability())
+			return false;
+		if(heroes.getEnergy() < Helper.villains.getEnergy())
+			return false;
+		if(heroes.getFightingSkills() < Helper.villains.getFightingSkills())
+			return false;
+		if(heroes.getIntelligence() < Helper.villains.getIntelligence())
+			return false;
+		if(heroes.getSpeed() < Helper.villains.getSpeed())
+			return false;
+		if(heroes.getStrength() < Helper.villains.getStrength())
+			return false;
+			
 		return true;
 	}
 	

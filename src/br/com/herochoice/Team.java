@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import sun.rmi.runtime.NewThreadAction;
-
 public class Team {
 	
 	private List<Character> team;
