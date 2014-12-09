@@ -23,12 +23,26 @@ public class Team {
 	private Double cost;
 	
 	public Team(){
+		team = new ArrayList<Character>();
 		
+		this.intelligence = 0.0;
+		this.strength = 0.0;
+		this.speed = 0.0;
+		this.durability = 0.0;
+		this.energy = 0.0;
+		this.fightingSkills = 0.0;
+		this.popMed = 0.0;
+		this.cost = 0.0;
+		this.pgMed = 0.0;
+		this.size = 0;
 	}
 	
 	public Team(List<Character> characters, List<Integer> ids){
+		team = new ArrayList<Character>();
+		
 		for(Integer id : ids){
-			team.add(characters.get(id-1));
+			Character c = characters.get(id-1);
+			team.add(c);
 		}
 		
 		this.size = team.size();
@@ -38,8 +52,17 @@ public class Team {
 	}
 
 	public void calculateAvgs() {
+		this.intelligence = 0.0;
+		this.strength = 0.0;
+		this.speed = 0.0;
+		this.durability = 0.0;
+		this.energy = 0.0;
+		this.fightingSkills = 0.0;
+		this.popMed = 0.0;
+		this.cost = 0.0;
+
 		for(int i=0; i < size; i++){
-			this.intelligence += team.get(i).getIntelligence() / size;
+			this.intelligence += (Double)(team.get(i).getIntelligence() / size);
 			this.strength += team.get(i).getStrength() / size;
 			this.speed += team.get(i).getSpeed() / size;
 			this.durability += team.get(i).getDurability() / size;
@@ -173,17 +196,20 @@ public class Team {
 	
 	public Team addCharacter(){
 		Random rand = new Random();
-		int newHero = rand.nextInt(381) + 1;
 		Character newChar;
 		do{
+			int newHero = rand.nextInt(381) + 1;
 			newChar = Helper.characters.get(newHero-1);
-		}while(!IsInTeam(team, newChar));
+		}while(IsInTeam(team, newChar));
+		newChar.print();
+		
 		Team newTeam = new Team();
 		copyTeam(newTeam, this);
 		
 		newTeam.getTeam().add(newChar);
 		newTeam.setSize(newTeam.getSize()+1);
 		newTeam.calculateAvgs();
+		newTeam.printPg();
 		return newTeam;
 	}
 	
@@ -211,10 +237,25 @@ public class Team {
 		copyTeam(newTeam, this);
 		
 		newTeam.getTeam().remove(heroOut-1);
+	
 		newTeam.getTeam().add(newChar);
 		newTeam.calculateAvgs();
 		return newTeam;
 	}
 	
+	public void print(){
+		if(team.size() > 0){
+			for(Character c : team){
+				System.out.print(c.getName() + "|");
+			}
+			System.out.println("");
+		}else{
+			System.out.println("Empty Team");
+		}
+	}
+	
+	public void printPg(){
+		System.out.println("Team: " + intelligence + "|" + strength + "|" + speed + "|" + durability + "|" + energy + "|" + fightingSkills + "|" + pgMed + "|" + popMed + "|" + size);
+	}
 
 }

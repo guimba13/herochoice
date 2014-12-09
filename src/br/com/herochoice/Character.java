@@ -5,15 +5,15 @@ public class Character {
 	private int id;
 	private String name;
 	private boolean hero;
-	private Integer intelligence;
-	private Integer strength;
-	private Integer speed;
-	private Integer durability;
-	private Integer energy;
-	private Integer fightingSkills;
-	private Integer numberComics;
+	private Double intelligence;
+	private Double strength;
+	private Double speed;
+	private Double durability;
+	private Double energy;
+	private Double fightingSkills;
+	private Double numberComics;
 
-	public Integer getPgMed(){
+	public Double getPgMed(){
 		return (intelligence + strength + speed + durability + energy + fightingSkills) / 6;
 	}
 	
@@ -33,14 +33,6 @@ public class Character {
 		this.name = name;
 	}
 
-	public int getNumberComics() {
-		return numberComics;
-	}
-
-	public void setNumberComics(int numberComics) {
-		this.numberComics = numberComics;
-	}
-
 	public boolean isHero() {
 		return hero;
 	}
@@ -49,51 +41,63 @@ public class Character {
 		this.hero = hero;
 	}
 
-	public int getIntelligence() {
+	public Double getIntelligence() {
 		return intelligence;
 	}
 
-	public void setIntelligence(int intelligence) {
+	public void setIntelligence(Double intelligence) {
 		this.intelligence = intelligence;
 	}
 
-	public int getStrength() {
+	public Double getStrength() {
 		return strength;
 	}
 
-	public void setStrength(int strength) {
+	public void setStrength(Double strength) {
 		this.strength = strength;
 	}
 
-	public int getDurability() {
-		return durability;
-	}
-
-	public void setDurability(int durability) {
-		this.durability = durability;
-	}
-
-	public int getEnergy() {
-		return energy;
-	}
-
-	public void setEnergy(int energy) {
-		this.energy = energy;
-	}
-
-	public int getFightingSkills() {
-		return fightingSkills;
-	}
-
-	public void setFightingSkills(int fightingSkills) {
-		this.fightingSkills = fightingSkills;
-	}
-
-	public int getSpeed() {
+	public Double getSpeed() {
 		return speed;
 	}
 
-	public void setSpeed(int speed) {
+	public void setSpeed(Double speed) {
 		this.speed = speed;
+	}
+
+	public Double getDurability() {
+		return durability;
+	}
+
+	public void setDurability(Double durability) {
+		this.durability = durability;
+	}
+
+	public Double getEnergy() {
+		return energy;
+	}
+
+	public void setEnergy(Double energy) {
+		this.energy = energy;
+	}
+
+	public Double getFightingSkills() {
+		return fightingSkills;
+	}
+
+	public void setFightingSkills(Double fightingSkills) {
+		this.fightingSkills = fightingSkills;
+	}
+
+	public Double getNumberComics() {
+		return numberComics;
+	}
+
+	public void setNumberComics(Double numberComics) {
+		this.numberComics = numberComics;
+	}
+	
+	public void print(){
+		System.out.println("Character: " + id + "|" + name + "|" + intelligence + "|" + strength + "|" + speed + "|" + durability + "|" + energy + "|" + fightingSkills + "|" + numberComics  + "|");
 	}
 }

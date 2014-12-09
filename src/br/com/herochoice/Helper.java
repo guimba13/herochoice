@@ -34,13 +34,13 @@ public class Helper {
 			character.setId(Integer.parseInt(b[0]));
 			character.setName(b[1]);
 			character.setHero(b[2].equals("hero") ? true : false);
-			character.setIntelligence(Integer.parseInt(b[3]));
-			character.setStrength(Integer.parseInt(b[4]));
-			character.setSpeed(Integer.parseInt(b[5]));
-			character.setDurability(Integer.parseInt(b[6]));
-			character.setEnergy(Integer.parseInt(b[7]));
-			character.setFightingSkills(Integer.parseInt(b[8]));
-			character.setNumberComics(Integer.parseInt(b[9]));
+			character.setIntelligence(Double.parseDouble(b[3]));
+			character.setStrength(Double.parseDouble(b[4]));
+			character.setSpeed(Double.parseDouble(b[5]));
+			character.setDurability(Double.parseDouble(b[6]));
+			character.setEnergy(Double.parseDouble(b[7]));
+			character.setFightingSkills(Double.parseDouble(b[8]));
+			character.setNumberComics(Double.parseDouble(b[9]));
 
 			characteres.add(character);
 		}
@@ -53,8 +53,8 @@ public class Helper {
 
 		String line;
 		String splitBy = ";";
-		Relation relations[][] = new Relation[767][767];
-
+		relations = new Relation[767][767];
+		
 		boolean firstLine = true;
 		while ((line = br.readLine()) != null) {
 			if (firstLine) {
@@ -105,8 +105,8 @@ public class Helper {
 		return budget;
 	}
 	
-	public static Team createFirstTeam(List<Character> chars){
-		Team heroes = null;
+	public static Team createFirstTeam(){
+		Team heroes = new Team();
 		if(useBudget){
 			while(true){
 				Team newTeam = heroes.addCharacter();
@@ -125,7 +125,7 @@ public class Helper {
 		return heroes;
 	}
 	
-	public static Team getNeighborSolution(Team heroes, List<Character> chars){
+	public static Team getNeighborSolution(Team heroes){
 		Team neighbor = null;
 		Random rand = new Random();
 		
@@ -166,9 +166,28 @@ public class Helper {
 		return neighbor;
 	}
 	
-	public static Integer calculateSolutionValue(Team heroes, Team villains, List<Relation> relations){
-		Integer sol = 0;
+	public static Double calculateSolutionValue(Team heroes, Team villains){
+		Double sol = 0.0;
+		Double colaborattion = 0.0;
+		Double fightingExperience = 0.0;
+		Team aux = heroes;
 		
+		while(aux.getSize() > 0){
+			// colaboracao entre o time de herois
+			for(int j = 1; j < aux.getSize(); j++){
+				Relation rel = relations[aux.getTeam().get(0).getId() - 1][aux.getTeam().get(j).getId() - 1];
+				if(rel != null) colaborattion += rel.getNumberComics();
+			}
+			
+			for(int k = 0; k < villains.getSize(); k++){
+				Relation rel = relations[aux.getTeam().get(0).getId() - 1][villains.getTeam().get(k).getId() - 1];
+				if(rel != null) fightingExperience += rel.getNumberComics();
+			}
+			
+			aux.getTeam().remove(0);
+		}
+		
+		sol = colaborattion + fightingExperience;
 		return sol;
 	}
 	

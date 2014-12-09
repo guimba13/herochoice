@@ -16,7 +16,6 @@ public class Chooser {
 			Helper.characters = Helper.readCharacter();
 			Helper.relations = Helper.readRelations();
 
-			
 			List<String> villains = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);
 			String useBudget = args[1];
 			Helper.setUseBudget((useBudget != null && useBudget.equals("1")) ? true : false);
@@ -32,16 +31,20 @@ public class Chooser {
 		}
 		
 		Team villains = new Team(Helper.characters, ids);
-		
+		villains.print();
+
 		Double budget = Helper.calculateBudget(Helper.characters, villains);
 		Double temp = 0.0;// temp inicial
 		
+		Team firstChoice = Helper.createFirstTeam();
+		firstChoice.print();
+		firstChoice.printPg();
 		
-		
+		Double solutionValue = Helper.calculateSolutionValue(firstChoice, villains);
+		System.out.println("Solution value = " + solutionValue);
+		System.out.println("Solution cost = " + firstChoice.getCost());
 		
 	}
-	
-	
 
 	private static Character getCharacterById(int id) {
 		return Helper.characters.get(id - 1);
