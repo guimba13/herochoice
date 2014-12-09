@@ -5,11 +5,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Helper {
 
 	private static BufferedReader br;
 	private static Boolean useBudget;
+	public static List<Character> characters;
+	public static Relation relations[][];
 
 	public static List<Character> readCharacter() throws IOException {
 		br = new BufferedReader(new FileReader("character.csv"));
@@ -109,6 +112,10 @@ public class Helper {
 	
 	public static Team getNeighborSolution(Team heroes, List<Character> chars){
 		Team neighbor = null;
+		Random rand = new Random();
+		int  n = rand.nextInt(3) + 1;
+		
+		
 		return neighbor;
 	}
 	

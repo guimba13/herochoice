@@ -9,15 +9,12 @@ import java.util.List;
 
 public class Chooser {
 
-	private static List<Character> characters;
-	private static Relation relations[][];
-
 	public static void main(String[] args) {
 
 		List<Integer> ids = new ArrayList<Integer>();
 		try {
-			characters = Helper.readCharacter();
-			relations = Helper.readRelations();
+			Helper.characters = Helper.readCharacter();
+			Helper.relations = Helper.readRelations();
 
 			
 			List<String> villains = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);
@@ -34,9 +31,9 @@ public class Chooser {
 			e.printStackTrace();
 		}
 		
-		Team villains = new Team(characters, ids);
+		Team villains = new Team(Helper.characters, ids);
 		
-		Double budget = Helper.calculateBudget(characters, villains);
+		Double budget = Helper.calculateBudget(Helper.characters, villains);
 		Double temp = 0.0;// temp inicial
 		
 		
@@ -47,11 +44,11 @@ public class Chooser {
 	
 
 	private static Character getCharacterById(int id) {
-		return characters.get(id - 1);
+		return Helper.characters.get(id - 1);
 	}
 
 	private static Relation getRelationsById(int id1, int id2) {
-		return relations[id1 - 1][id2 - 1];
+		return Helper.relations[id1 - 1][id2 - 1];
 	}
 
 }

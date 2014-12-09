@@ -1,6 +1,10 @@
 package br.com.herochoice;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import sun.rmi.runtime.NewThreadAction;
 
 public class Team {
 	
@@ -18,6 +22,10 @@ public class Team {
 	private Integer size;
 	private Integer cost;
 	
+	public Team(){
+		
+	}
+	
 	public Team(List<Character> characters, List<Integer> ids){
 		for(Integer id : ids){
 			team.add(characters.get(id-1));
@@ -26,6 +34,10 @@ public class Team {
 		this.size = team.size();
 		if(size <= 0) return;
 		
+		calculateAvgs();
+	}
+
+	public void calculateAvgs() {
 		for(int i=0; i < size; i++){
 			this.intelligence += team.get(i).getIntelligence() / size;
 			this.strength += team.get(i).getStrength() / size;
@@ -133,6 +145,33 @@ public class Team {
 
 	public void setCost(Integer cost) {
 		this.cost = cost;
+	}
+	
+	private void copyTeam(Team team1,Team team2 ){
+		team1.setCost(team2.getCost());
+		team1.setDurability(team2.getDurability());
+		team1.setEnergy(team2.getEnergy());
+		team1.setFightingSkills(team2.getFightingSkills());
+		team1.setIntelligence(team2.getIntelligence());
+		team1.setIsHero(team2.getIsHero());
+		team1.setPgMed(team2.getPgMed());
+		team1.setPopMed(team2.getPopMed());
+		team1.setSize(team2.getSize());
+		team1.setSpeed(team2.getSpeed());
+		team1.setStrength(team2.getStrength());
+		team1.setTeam(team2.getTeam());
+	}
+	
+	public Team addCharacter(){
+		Random rand = new Random();
+		int newHero = rand.nextInt(381) + 1; //382 a 777
+		Team newTeam = new Team();
+		copyTeam(newTeam, this);
+		
+		newTeam.getTeam().add(Helper.characters.get(newHero));
+		newTeam.setSize(newTeam.getSize()+1);
+		newTeam.calculateAvgs();
+		return newTeam;
 	}
 	
 
