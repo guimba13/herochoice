@@ -33,9 +33,13 @@ public class Chooser {
 			e.printStackTrace();
 		}
 		
-		
 		Team villains = new Team(characters, ids);
+		
 		Double budget = Helper.calculateBudget(characters, villains);
+		Double temp = 0.0;// temp inicial
+		
+		
+		
 		
 	}
 	

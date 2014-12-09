@@ -100,4 +100,29 @@ public class Helper {
 		budget = Math.max(exp1, exp2);
 		return budget;
 	}
+	
+	public static Team createFirstTeam(List<Character> chars){
+		Team heroes = null;
+		return heroes;
+	}
+	
+	public static Team getNeighborSolution(Team heroes, List<Character> chars){
+		Team neighbor = null;
+		return neighbor;
+	}
+	
+	public static Integer calculateSolutionValue(Team heroes, Team villains, List<Relation> relations){
+		Integer sol = 0;
+		return sol;
+	}
+	
+	public static Boolean isValidSolution(Team heroes){
+		return true;
+	}
+	
+	public static Double updateTemp(Double temp){
+		Double newTemp = 0.0;
+		return newTemp;
+	}
+	
 }

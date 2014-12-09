@@ -7,15 +7,14 @@ public class Team {
 	private List<Character> team;
 	private Boolean isHero;
 	
-	private Integer intelligence;
-	private Integer strength;
-	private Integer speed;
-	private Integer durability;
-	private Integer energy;
-	private Integer fightingSkills;
-	private Integer pgMed;
-	private Integer popMed;
-	private Integer numberComics;
+	private Double intelligence;
+	private Double strength;
+	private Double speed;
+	private Double durability;
+	private Double energy;
+	private Double fightingSkills;
+	private Double pgMed;
+	private Double popMed;
 	private Integer size;
 	private Integer cost;
 	
@@ -39,92 +38,84 @@ public class Team {
 		}
 		this.pgMed = (intelligence + strength + speed + durability + energy + fightingSkills) / 6;
 	}
-	
+
 	public List<Character> getTeam() {
 		return team;
 	}
-	
+
 	public void setTeam(List<Character> team) {
 		this.team = team;
 	}
-	
+
 	public Boolean getIsHero() {
 		return isHero;
 	}
-	
+
 	public void setIsHero(Boolean isHero) {
 		this.isHero = isHero;
 	}
 
-	public Integer getIntelligence() {
+	public Double getIntelligence() {
 		return intelligence;
 	}
 
-	public void setIntelligence(Integer intelligence) {
+	public void setIntelligence(Double intelligence) {
 		this.intelligence = intelligence;
 	}
 
-	public Integer getStrength() {
+	public Double getStrength() {
 		return strength;
 	}
 
-	public void setStrength(Integer strength) {
+	public void setStrength(Double strength) {
 		this.strength = strength;
 	}
 
-	public Integer getSpeed() {
+	public Double getSpeed() {
 		return speed;
 	}
 
-	public void setSpeed(Integer speed) {
+	public void setSpeed(Double speed) {
 		this.speed = speed;
 	}
 
-	public Integer getDurability() {
+	public Double getDurability() {
 		return durability;
 	}
 
-	public void setDurability(Integer durability) {
+	public void setDurability(Double durability) {
 		this.durability = durability;
 	}
 
-	public Integer getEnergy() {
+	public Double getEnergy() {
 		return energy;
 	}
 
-	public void setEnergy(Integer energy) {
+	public void setEnergy(Double energy) {
 		this.energy = energy;
 	}
 
-	public Integer getFightingSkills() {
+	public Double getFightingSkills() {
 		return fightingSkills;
 	}
 
-	public void setFightingSkills(Integer fightingSkills) {
+	public void setFightingSkills(Double fightingSkills) {
 		this.fightingSkills = fightingSkills;
 	}
 
-	public Integer getPgMed() {
+	public Double getPgMed() {
 		return pgMed;
 	}
 
-	public void setPgMed(Integer pgMed) {
+	public void setPgMed(Double pgMed) {
 		this.pgMed = pgMed;
 	}
 
-	public Integer getNumberComics() {
-		return numberComics;
-	}
-
-	public void setNumberComics(Integer numberComics) {
-		this.numberComics = numberComics;
-	}
-
-	public Integer getPopMed() {
+	public Double getPopMed() {
 		return popMed;
 	}
 
-	public void setPopMed(Integer popMed) {
+	public void setPopMed(Double popMed) {
 		this.popMed = popMed;
 	}
 
@@ -144,5 +135,5 @@ public class Team {
 		this.cost = cost;
 	}
 	
-	
+
 }
