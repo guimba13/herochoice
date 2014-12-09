@@ -15,6 +15,9 @@ public class Helper {
 	public static List<Character> characters;
 	public static Relation relations[][];
 	public static Team villains;
+	public static Double alpha = 0.7;
+	public static Double temp = 25.0;
+	
 
 	public static List<Character> readCharacter() throws IOException {
 		br = new BufferedReader(new FileReader("character.csv"));
@@ -212,9 +215,8 @@ public class Helper {
 		return true;
 	}
 	
-	public static Double updateTemp(Double temp){
-		Double newTemp = 0.0;
-		return newTemp;
+	public static void updateTemp(){
+		temp = temp * alpha;
 	}
 	
 	public static void setUseBudget(Boolean bg){
