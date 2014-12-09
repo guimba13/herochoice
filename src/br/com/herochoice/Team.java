@@ -20,7 +20,7 @@ public class Team {
 	private Double pgMed;
 	private Double popMed;
 	private Integer size;
-	private Integer cost;
+	private Double cost;
 	
 	public Team(){
 		
@@ -139,11 +139,11 @@ public class Team {
 		this.size = size;
 	}
 
-	public Integer getCost() {
+	public Double getCost() {
 		return cost;
 	}
 
-	public void setCost(Integer cost) {
+	public void setCost(Double cost) {
 		this.cost = cost;
 	}
 	

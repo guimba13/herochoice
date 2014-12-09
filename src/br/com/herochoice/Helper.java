@@ -11,6 +11,7 @@ public class Helper {
 
 	private static BufferedReader br;
 	private static Boolean useBudget;
+	public static Double budget;
 	public static List<Character> characters;
 	public static Relation relations[][];
 
@@ -72,8 +73,6 @@ public class Helper {
 	}
 	
 	public static Double calculateBudget(List<Character> chars, Team villains){
-		Double budget = 0.0;
-		
 		Double avgPgHeroes = 0.0;
 		Double avgPopHeroes = 0.0;
 		Double avgPgVillains = 0.0;
@@ -102,19 +101,67 @@ public class Helper {
 		Double exp2 = factor * avgPgHeroes * avgPopHeroes * villains.getSize();
 		
 		budget = Math.max(exp1, exp2);
+		
 		return budget;
 	}
 	
 	public static Team createFirstTeam(List<Character> chars){
 		Team heroes = null;
+		if(useBudget){
+			while(true){
+				Team newTeam = heroes.addCharacter();
+				if(newTeam.getCost() < budget){
+					heroes = newTeam;
+				}else if(newTeam.getCost() == budget){
+					heroes = newTeam;
+					break;
+				}else{
+					break;
+				}
+			}
+		}else{
+			// TODO
+		}
 		return heroes;
 	}
 	
 	public static Team getNeighborSolution(Team heroes, List<Character> chars){
 		Team neighbor = null;
 		Random rand = new Random();
-		int  n = rand.nextInt(3) + 1;
 		
+		if(useBudget){
+			while(true){
+				int n = 0;
+				if(heroes.getSize() > 1){
+					n = rand.nextInt(3) + 1;
+				}else{
+					n = rand.nextInt(2) + 1;
+				}
+				
+				if(n == 1){
+					neighbor = heroes.addCharacter();
+					if(neighbor.getCost() <= budget){
+						return neighbor;
+					}else{
+						continue;
+					}
+				}else if(n == 2){
+					neighbor = heroes.changeCharacter();
+					if(neighbor.getCost() <= budget){
+						return neighbor;
+					}else{
+						continue;
+					}
+				}else if(n == 3){
+					neighbor.removeCharacter();
+					return neighbor;
+				}else{
+					continue;
+				}
+			}
+		}else{
+			// TODO
+		}
 		
 		return neighbor;
 	}
