@@ -9,6 +9,7 @@ import java.util.List;
 public class Helper {
 
 	private static BufferedReader br;
+	private static Boolean useBudget;
 
 	public static List<Character> readCharacter() throws IOException {
 		br = new BufferedReader(new FileReader("character.csv"));
@@ -113,6 +114,7 @@ public class Helper {
 	
 	public static Integer calculateSolutionValue(Team heroes, Team villains, List<Relation> relations){
 		Integer sol = 0;
+		
 		return sol;
 	}
 	
@@ -125,4 +127,7 @@ public class Helper {
 		return newTemp;
 	}
 	
+	public static void setUseBudget(Boolean bg){
+		useBudget = bg;
+	}
 }

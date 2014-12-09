@@ -20,8 +20,9 @@ public class Chooser {
 			relations = Helper.readRelations();
 
 			
-			List<String> villains = Files.readAllLines(Paths.get(args[0]),
-					StandardCharsets.UTF_8);
+			List<String> villains = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);
+			String useBudget = args[1];
+			Helper.setUseBudget((useBudget != null && useBudget.equals("1")) ? true : false);
 
 			String villainsIds[] = villains.get(0).split(" ");
 			
