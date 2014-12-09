@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Chooser {
@@ -13,21 +14,26 @@ public class Chooser {
 
 	public static void main(String[] args) {
 
+		List<Integer> ids = new ArrayList<Integer>();
 		try {
 			characters = Helper.readCharacter();
 			relations = Helper.readRelations();
 
+			
 			List<String> villains = Files.readAllLines(Paths.get(args[0]),
 					StandardCharsets.UTF_8);
 
 			String villainsIds[] = villains.get(0).split(" ");
+			
+			for(String villain : villainsIds){
+				ids.add(Integer.parseInt(villain));
+			}
 
-			return;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		List<String> ids = null;
+		
 		Team villains = new Team(characters, ids);
 		Double budget = Helper.calculateBudget(characters, villains);
 		
