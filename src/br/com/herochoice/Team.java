@@ -25,6 +25,8 @@ public class Team {
 		}
 		
 		this.size = team.size();
+		if(size <= 0) return;
+		
 		for(int i=0; i < size; i++){
 			this.intelligence += team.get(i).getIntelligence() / size;
 			this.strength += team.get(i).getStrength() / size;
@@ -35,7 +37,7 @@ public class Team {
 			this.popMed += team.get(i).getNumberComics() / size;
 			this.cost += (team.get(i).getPgMed() * team.get(i).getNumberComics());
 		}
-		if(size>0) this.pgMed = (intelligence + strength + speed + durability + energy + fightingSkills) / 6;
+		this.pgMed = (intelligence + strength + speed + durability + energy + fightingSkills) / 6;
 	}
 	
 	public List<Character> getTeam() {

@@ -17,7 +17,14 @@ public class Chooser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		List<String> ids = null;
+		Team villains = new Team(characters, ids);
+		Double budget = Helper.calculateBudget(characters, villains);
+		
 	}
+	
+	
 
 	private static Character getCharacterById(int id){
 		return characters.get(id-1);

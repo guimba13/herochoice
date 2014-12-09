@@ -66,4 +66,38 @@ public class Helper {
 
 		return relations;
 	}
+	
+	public static Double calculateBudget(List<Character> chars, Team villains){
+		Double budget = 0.0;
+		
+		Double avgPgHeroes = 0.0;
+		Double avgPopHeroes = 0.0;
+		Double avgPgVillains = 0.0;
+		
+		int i = 0;
+		int j = 0;
+		for(Character c : chars){
+			if(c.isHero()){
+				avgPgHeroes += c.getPgMed();
+				avgPopHeroes += c.getNumberComics();
+				i++;
+			}else{
+				avgPgVillains += c.getPgMed();
+				j++;
+			}
+		}
+		avgPgHeroes = avgPgHeroes/i;
+		avgPopHeroes = avgPopHeroes/i;
+		avgPgVillains = avgPgVillains/j;
+		
+		Double radiopg = avgPgHeroes / villains.getPgMed();
+		Double radiopop = avgPopHeroes / villains.getPopMed();
+		Double factor = villains.getPgMed() / avgPgVillains;
+		
+		Double exp1 = radiopg * radiopop * villains.getCost();
+		Double exp2 = factor * avgPgHeroes * avgPopHeroes * villains.getSize();
+		
+		budget = Math.max(exp1, exp2);
+		return budget;
+	}
 }
