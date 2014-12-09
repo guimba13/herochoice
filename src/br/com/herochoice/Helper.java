@@ -172,14 +172,14 @@ public class Helper {
 		Double fightingExperience = 0.0;
 		Team aux = heroes;
 		
-		while(aux.getSize() > 0){
+		while(aux.getTeam().size() > 0){
 			// colaboracao entre o time de herois
-			for(int j = 1; j < aux.getSize(); j++){
+			for(int j = 1; j < aux.getTeam().size(); j++){
 				Relation rel = relations[aux.getTeam().get(0).getId() - 1][aux.getTeam().get(j).getId() - 1];
 				if(rel != null) colaborattion += rel.getNumberComics();
 			}
 			
-			for(int k = 0; k < villains.getSize(); k++){
+			for(int k = 0; k < villains.getTeam().size(); k++){
 				Relation rel = relations[aux.getTeam().get(0).getId() - 1][villains.getTeam().get(k).getId() - 1];
 				if(rel != null) fightingExperience += rel.getNumberComics();
 			}
