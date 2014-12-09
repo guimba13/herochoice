@@ -111,21 +111,20 @@ public class Helper {
 	
 	public static Team createFirstTeam(){
 		Team heroes = new Team();
-		if(useBudget){
-			while(true){
-				Team newTeam = heroes.addCharacter();
-				if(newTeam.getCost() < budget){
-					heroes = newTeam;
-				}else if(newTeam.getCost() == budget){
+		Team newTeam = new Team();
+		do{
+			newTeam = heroes.addCharacter();
+			if(useBudget){
+				if(newTeam.getCost() == budget){
 					heroes = newTeam;
 					break;
+				}else if(newTeam.getCost() < budget){
+					heroes = newTeam;
 				}else{
 					break;
 				}
 			}
-		}else{
-			// TODO
-		}
+		}while(newTeam.getSize() < villains.getSize() );
 		return heroes;
 	}
 	
@@ -133,41 +132,38 @@ public class Helper {
 		Team neighbor = null;
 		Random rand = new Random();
 		
-		if(useBudget){
-			while(true){
-				int n = 0;
-				if(heroes.getSize() > 1){
+		while(true){
+			int n = 0;
+			if(heroes.getSize() > 1){
+				if(heroes.getSize() < villains.getSize())
 					n = rand.nextInt(3) + 1;
-				}else{
-					n = rand.nextInt(2) + 1;
-				}
-				
-				if(n == 1){
-					neighbor = heroes.addCharacter();
-					if(neighbor.getCost() <= budget){
-						return neighbor;
-					}else{
-						continue;
-					}
-				}else if(n == 2){
-					neighbor = heroes.changeCharacter();
-					if(neighbor.getCost() <= budget){
-						return neighbor;
-					}else{
-						continue;
-					}
-				}else if(n == 3){
-					neighbor.removeCharacter();
+				else
+					n = rand.nextInt(2) + 2;
+			}else{
+				n = rand.nextInt(2) + 1;
+			}
+			
+			if(n == 1){
+				neighbor = heroes.addCharacter();
+				if(!useBudget || (useBudget && neighbor.getCost() <= budget)){
 					return neighbor;
 				}else{
 					continue;
 				}
+			}else if(n == 2){
+				neighbor = heroes.changeCharacter();
+				if(!useBudget || (useBudget && neighbor.getCost() <= budget)){
+					return neighbor;
+				}else{
+					continue;
+				}
+			}else if(n == 3){
+				neighbor.removeCharacter();
+				return neighbor;
+			}else{
+				continue;
 			}
-		}else{
-			// TODO
 		}
-		
-		return neighbor;
 	}
 	
 	public static Double calculateSolutionValue(Team heroes, Team villains){
