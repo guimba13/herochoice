@@ -59,7 +59,7 @@ public class Team {
 		this.popMed = 0.0;
 		this.cost = 0.0;
 
-		for(int i=0; i < size; i++){
+		for(int i=0; i < team.size(); i++){
 			this.intelligence += (Double)(team.get(i).getIntelligence() / size);
 			this.strength += team.get(i).getStrength() / size;
 			this.speed += team.get(i).getSpeed() / size;
@@ -199,7 +199,6 @@ public class Team {
 			int newHero = rand.nextInt(381) + 1;
 			newChar = Helper.characters.get(newHero-1);
 		}while(IsInTeam(team, newChar));
-		newChar.print();
 		
 		Team newTeam = new Team();
 		copyTeam(newTeam, this);
@@ -207,7 +206,6 @@ public class Team {
 		newTeam.getTeam().add(newChar);
 		newTeam.setSize(newTeam.getSize()+1);
 		newTeam.calculateAvgs();
-		newTeam.printPg();
 		return newTeam;
 	}
 	
@@ -225,12 +223,12 @@ public class Team {
 	
 	public Team changeCharacter(){
 		Random rand = new Random();
-		int heroOut = rand.nextInt(this.size) + 1; 
+		int heroOut = rand.nextInt(this.team.size()) + 1; 
 		int heroIn = rand.nextInt(381) + 1; 
 		Character newChar;
 		do{
 			newChar = Helper.characters.get(heroIn-1);
-		}while(!IsInTeam(team, newChar));
+		}while(IsInTeam(team, newChar));
 		Team newTeam = new Team();
 		copyTeam(newTeam, this);
 		

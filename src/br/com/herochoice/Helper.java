@@ -17,6 +17,8 @@ public class Helper {
 	public static Team villains;
 	public static Double alpha = 0.7;
 	public static Double temp = 25.0;
+	public static Double k = 1.0;
+	public static Integer maxRepetitions = 20;
 	
 
 	public static List<Character> readCharacter() throws IOException {
@@ -158,7 +160,7 @@ public class Helper {
 					continue;
 				}
 			}else if(n == 3){
-				neighbor.removeCharacter();
+				neighbor = heroes.removeCharacter();
 				return neighbor;
 			}else{
 				continue;
@@ -166,7 +168,7 @@ public class Helper {
 		}
 	}
 	
-	public static Double calculateSolutionValue(Team heroes, Team villains){
+	public static Double calculateSolutionValue(Team heroes){
 		Double sol = 0.0;
 		Double colaborattion = 0.0;
 		Double fightingExperience = 0.0;
@@ -213,6 +215,10 @@ public class Helper {
 	
 	public static void updateTemp(){
 		temp = temp * alpha;
+	}
+	
+	public static Double newProbability(Double delta){
+		return Math.exp(delta/(k*temp));
 	}
 	
 	public static void setUseBudget(Boolean bg){

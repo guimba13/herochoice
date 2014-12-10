@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Chooser {
 
@@ -34,16 +35,50 @@ public class Chooser {
 		Helper.villains.print();
 
 		Double budget = Helper.calculateBudget(Helper.characters, Helper.villains);
-		Double temp = 0.0;// temp inicial
+		Team heroes = Helper.createFirstTeam();
 		
-		Team firstChoice = Helper.createFirstTeam();
-		firstChoice.print();
-		firstChoice.printPg();
+//		Double solutionValue = Helper.calculateSolutionValue(firstChoice, Helper.villains);
+//		System.out.println("Solution value = " + solutionValue);
+//		System.out.println("Solution cost = " + firstChoice.getCost());
 		
-		Double solutionValue = Helper.calculateSolutionValue(firstChoice, Helper.villains);
-		System.out.println("Solution value = " + solutionValue);
-		System.out.println("Solution cost = " + firstChoice.getCost());
+		Team otmSolution = new Team();
+		Double otmSolValue = 0.0;
+		Integer counter = 0;
 		
+		do{
+			do{
+				counter++;
+				
+				Team newSolution = Helper.getNeighborSolution(heroes);
+				Double solValue = Helper.calculateSolutionValue(heroes);
+				Double newSolValue = Helper.calculateSolutionValue(newSolution);
+				Double delta = newSolValue - solValue;
+				
+				if(delta >= 0){
+					heroes = newSolution;
+					if(newSolValue > otmSolValue && Helper.isValidSolution(heroes)){
+						otmSolution = newSolution;
+						otmSolValue = newSolValue;
+						counter = 0;
+					}
+				}else{
+					Double np = Helper.newProbability(delta);
+					Random rand = new Random();
+					Double prob = rand.nextDouble();
+					if(prob <= np){
+						heroes = newSolution;
+						if(newSolValue > otmSolValue && Helper.isValidSolution(heroes)){
+							otmSolution = newSolution;
+							otmSolValue = newSolValue;
+							counter = 0;
+						}
+					}
+				}
+			}while(counter <= Helper.maxRepetitions);
+			Helper.updateTemp();
+		}while(Helper.temp < 1);
+		
+		otmSolution.print();
 	}
 
 	private static Character getCharacterById(int id) {
