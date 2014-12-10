@@ -180,7 +180,10 @@ public class Team {
 		team1.setSize(team2.getSize());
 		team1.setSpeed(team2.getSpeed());
 		team1.setStrength(team2.getStrength());
-		team1.setTeam(team2.getTeam());
+		List<Character> cs = new ArrayList<Character>();
+		for(Character c : team2.getTeam())
+			cs.add(c);
+		team1.setTeam(cs);
 	}
 	
 	private Boolean IsInTeam(List<Character> team, Character c){
