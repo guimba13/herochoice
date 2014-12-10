@@ -211,11 +211,11 @@ public class Team {
 	
 	public Team removeCharacter(){
 		Random rand = new Random();
-		int newHero = rand.nextInt(this.size) + 1; 
+		int newHero = rand.nextInt(this.team.size()); 
 		Team newTeam = new Team();
 		copyTeam(newTeam, this);
 		
-		newTeam.getTeam().remove(newHero-1);
+		newTeam.getTeam().remove(newHero);
 		newTeam.setSize(newTeam.getSize()-1);
 		newTeam.calculateAvgs();
 		return newTeam;
@@ -223,7 +223,7 @@ public class Team {
 	
 	public Team changeCharacter(){
 		Random rand = new Random();
-		int heroOut = rand.nextInt(this.team.size()) + 1; 
+		int heroOut = rand.nextInt(this.team.size()); 
 		int heroIn = rand.nextInt(381) + 1; 
 		Character newChar;
 		do{
@@ -232,7 +232,7 @@ public class Team {
 		Team newTeam = new Team();
 		copyTeam(newTeam, this);
 		
-		newTeam.getTeam().remove(heroOut-1);
+		newTeam.getTeam().remove(heroOut);
 	
 		newTeam.getTeam().add(newChar);
 		newTeam.calculateAvgs();
