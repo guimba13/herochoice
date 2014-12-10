@@ -168,7 +168,7 @@ public class Team {
 		this.cost = cost;
 	}
 	
-	private void copyTeam(Team team1,Team team2 ){
+	public static void copyTeam(Team team1,Team team2 ){
 		team1.setCost(team2.getCost());
 		team1.setDurability(team2.getDurability());
 		team1.setEnergy(team2.getEnergy());

@@ -136,16 +136,9 @@ public class Helper {
 		
 		while(true){
 			int n = 0;
-			if(heroes.getSize() > 1){
-				if(heroes.getSize() < villains.getSize())
-					n = rand.nextInt(3) + 1;
-				else
-					n = rand.nextInt(2) + 2;
-			}else{
-				n = rand.nextInt(2) + 1;
-			}
+			n = rand.nextInt(3) + 1;
 			
-			if(n == 1){
+			if(n == 1 && heroes.getTeam().size() < villains.getSize()){
 				neighbor = heroes.addCharacter();
 				if(!useBudget || (useBudget && neighbor.getCost() <= budget)){
 					return neighbor;
@@ -159,7 +152,7 @@ public class Helper {
 				}else{
 					continue;
 				}
-			}else if(n == 3){
+			}else if(n == 3 && heroes.getTeam().size() > 1){
 				neighbor = heroes.removeCharacter();
 				return neighbor;
 			}else{
@@ -172,7 +165,8 @@ public class Helper {
 		Double sol = 0.0;
 		Double colaborattion = 0.0;
 		Double fightingExperience = 0.0;
-		Team aux = heroes;
+		Team aux = new Team();
+		Team.copyTeam(aux, heroes);
 		
 		while(aux.getTeam().size() > 0){
 			// colaboracao entre o time de herois
@@ -224,4 +218,5 @@ public class Helper {
 	public static void setUseBudget(Boolean bg){
 		useBudget = bg;
 	}
+	
 }
