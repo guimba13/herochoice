@@ -18,8 +18,8 @@ public class Chooser {
 			Helper.relations = Helper.readRelations();
 
 			List<String> villains = Files.readAllLines(Paths.get(args[0]), StandardCharsets.UTF_8);
-			String useBudget = args[1];
-			Helper.setUseBudget((useBudget != null && useBudget.equals("1")) ? true : false);
+			String useBudget = args.length > 1 ? args[1] : null;
+			Helper.setUseBudget((useBudget != null && useBudget.equals("-b")) ? true : false);
 
 			String villainsIds[] = villains.get(0).split(" ");
 			
@@ -32,53 +32,68 @@ public class Chooser {
 		}
 		
 		Helper.villains = new Team(Helper.characters, ids);
+		System.out.println("Time de viloes: ");
 		Helper.villains.print();
+		
+		// ajusta as variaveis de controle a partir do tamanho do problema
+		Integer size = Helper.villains.getTeam().size(); 
+		if(size <= 8){
+			Helper.temp = 80.0;
+			Helper.k = 80.0;
+		}else if(size <= 14){
+			Helper.temp = 150.0;
+			Helper.k = 150.0;
+		}else{
+			Helper.temp = 200.0;
+			Helper.k = 200.0;
+		}
 
 		Double budget = Helper.calculateBudget(Helper.characters, Helper.villains);
 		Team heroes = Helper.createFirstTeam();
-		
-//		Double solutionValue = Helper.calculateSolutionValue(firstChoice, Helper.villains);
-//		System.out.println("Solution value = " + solutionValue);
-//		System.out.println("Solution cost = " + firstChoice.getCost());
 		
 		Team otmSolution = new Team();
 		Double otmSolValue = 0.0;
 		Integer counter = 0;
 		
 		do{
-			do{
-				counter++;
-				
-				Team newSolution = Helper.getNeighborSolution(heroes);
-				Double solValue = Helper.calculateSolutionValue(heroes);
-				Double newSolValue = Helper.calculateSolutionValue(newSolution);
-				Double delta = newSolValue - solValue;
-				
-				if(delta >= 0){
+			counter++;
+			
+			Team newSolution = Helper.getNeighborSolution(heroes);
+			Double solValue = Helper.calculateSolutionValue(heroes, false);
+			Double newSolValue = Helper.calculateSolutionValue(newSolution, false);
+			Double delta = newSolValue - solValue;
+			
+			if(delta >= 0){
+				Team.copyTeam(heroes, newSolution);
+				if(newSolValue > otmSolValue && Helper.isValidSolution(heroes)){
+					Team.copyTeam(otmSolution, newSolution);
+					otmSolValue = newSolValue;
+					counter = 0;
+				}
+			}else{
+				Double np = Helper.newProbability(delta);
+				Random rand = new Random();
+				Double prob = rand.nextDouble();
+				if(prob <= np){
 					heroes = newSolution;
 					if(newSolValue > otmSolValue && Helper.isValidSolution(heroes)){
-						otmSolution = newSolution;
+						Team.copyTeam(otmSolution, newSolution);
 						otmSolValue = newSolValue;
 						counter = 0;
 					}
-				}else{
-					Double np = Helper.newProbability(delta);
-					Random rand = new Random();
-					Double prob = rand.nextDouble();
-					if(prob <= np){
-						heroes = newSolution;
-						if(newSolValue > otmSolValue && Helper.isValidSolution(heroes)){
-							otmSolution = newSolution;
-							otmSolValue = newSolValue;
-							counter = 0;
-						}
-					}
 				}
-			}while(counter <= Helper.maxRepetitions);
+			}
 			Helper.updateTemp();
-		}while(Helper.temp < 1);
+		}while(Helper.temp > 0.1 && counter <= Helper.maxRepetitions);
 		
+		if(Helper.print && counter > Helper.maxRepetitions) System.out.println("MAX REPETITIONS");
+		if(Helper.print && Helper.temp < 0.01) System.out.println("TIME");
+		
+		System.out.println("Time de herois: ");
 		otmSolution.print();
+		System.out.println("budget: " + otmSolution.getCost());
+		Double endValue = Helper.calculateSolutionValue(otmSolution, true);
+		System.out.println("Total: " + otmSolValue);
 	}
 
 	private static Character getCharacterById(int id) {

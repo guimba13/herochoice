@@ -1,1 +1,8 @@
-763 627
+Time de viloes: 
+doctor doom|magneto|galactus|gorgon|loki|molecule man|kingpin|absorbing man|doctor octopus|lizard|piledriver|sandman|red skull|bulldozer|
+Time de herois: 
+thing|human torch|thor|captain america|invisible woman|mister fantastic|iron man|vision|scarlet witch|wasp|spider-man|ant-man|wonder man|she-hulk|
+budget: 47936.33333333333
+collaboration: 19156.0
+fighting experience: 12567.0
+Total: 31723.0

@@ -15,12 +15,13 @@ public class Helper {
 	public static List<Character> characters;
 	public static Relation relations[][];
 	public static Team villains;
-	public static Double alpha = 0.7;
-	public static Double temp = 25.0;
-	public static Double k = 1.0;
-	public static Integer maxRepetitions = 20;
-	
+	public static boolean print = false;
 
+	public static Double alpha = 0.9999;
+	public static Double temp = 150.0; // 8 = 80/80 - 10/12/14 = 100/100 - 16 = 200/200
+	public static Double k = 150.0; 
+	public static Long maxRepetitions = 100000l;
+	
 	public static List<Character> readCharacter() throws IOException {
 		br = new BufferedReader(new FileReader("character.csv"));
 
@@ -73,6 +74,7 @@ public class Helper {
 			Relation relation = new Relation();
 			relation.setNumberComics(Integer.parseInt(b[2]));
 			relations[Integer.parseInt(b[0])-1][Integer.parseInt(b[1])-1] = relation;
+			relations[Integer.parseInt(b[1])-1][Integer.parseInt(b[0])-1] = relation;
 		}
 
 		return relations;
@@ -115,7 +117,7 @@ public class Helper {
 		Team heroes = new Team();
 		Team newTeam = new Team();
 		do{
-			newTeam = heroes.addCharacter();
+			newTeam = heroes.addCharacterFirstTeam(newTeam, relations);
 			if(useBudget){
 				if(newTeam.getCost() == budget){
 					heroes = newTeam;
@@ -125,8 +127,11 @@ public class Helper {
 				}else{
 					break;
 				}
+			}else{
+				heroes = newTeam;
 			}
-		}while(newTeam.getSize() < villains.getSize() );
+		}while(newTeam.getTeam().size() < villains.getTeam().size());
+		
 		return heroes;
 	}
 	
@@ -161,7 +166,7 @@ public class Helper {
 		}
 	}
 	
-	public static Double calculateSolutionValue(Team heroes){
+	public static Double calculateSolutionValue(Team heroes, Boolean imprime){
 		Double sol = 0.0;
 		Double colaborattion = 0.0;
 		Double fightingExperience = 0.0;
@@ -182,13 +187,16 @@ public class Helper {
 			
 			aux.getTeam().remove(0);
 		}
-		
+		if(imprime){
+			System.out.println("collaboration: " + colaborattion);
+			System.out.println("fighting experience: " + fightingExperience);
+		}
 		sol = colaborattion + fightingExperience;
 		return sol;
 	}
 	
 	public static boolean isValidSolution(Team heroes){
-		if(heroes.getCost() > budget){
+		if(useBudget && heroes.getCost() > budget){
 			return false;
 		}
 		if(heroes.getDurability() < Helper.villains.getDurability())
@@ -212,7 +220,9 @@ public class Helper {
 	}
 	
 	public static Double newProbability(Double delta){
-		return Math.exp(delta/(k*temp));
+		Double np = Math.exp(delta/(k*temp));
+		if(print) System.out.println("PROP int time : " + np + " -- DELTA: " + delta	+ " --- TEMP:" + temp);
+		return np;
 	}
 	
 	public static void setUseBudget(Boolean bg){

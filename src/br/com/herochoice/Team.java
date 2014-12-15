@@ -60,16 +60,16 @@ public class Team {
 		this.cost = 0.0;
 
 		for(int i=0; i < team.size(); i++){
-			this.intelligence += (Double)(team.get(i).getIntelligence() / size);
-			this.strength += team.get(i).getStrength() / size;
-			this.speed += team.get(i).getSpeed() / size;
-			this.durability += team.get(i).getDurability() / size;
-			this.energy += team.get(i).getEnergy() / size;
-			this.fightingSkills += team.get(i).getFightingSkills() / size;
-			this.popMed += team.get(i).getNumberComics() / size;
-			this.cost += (team.get(i).getPgMed() * team.get(i).getNumberComics());
+			this.intelligence += (Double)(team.get(i).getIntelligence() / team.size());
+			this.strength += (Double)team.get(i).getStrength() / team.size();
+			this.speed += (Double)team.get(i).getSpeed() / team.size();
+			this.durability += (Double)team.get(i).getDurability() / team.size();
+			this.energy += (Double)team.get(i).getEnergy() / team.size();
+			this.fightingSkills += (Double)team.get(i).getFightingSkills() / team.size();
+			this.popMed += (Double)team.get(i).getNumberComics() / team.size();
+			this.cost += (Double)(team.get(i).getPgMed() * team.get(i).getNumberComics());
 		}
-		this.pgMed = (intelligence + strength + speed + durability + energy + fightingSkills) / 6;
+		this.pgMed = (Double)(intelligence + strength + speed + durability + energy + fightingSkills) / 6;
 	}
 
 	public List<Character> getTeam() {
@@ -212,9 +212,34 @@ public class Team {
 		return newTeam;
 	}
 	
+	public Team addCharacterFirstTeam(Team villains, Relation relations[][]){
+		Random rand = new Random();
+		Character newChar;
+		Boolean hasRelation = Boolean.FALSE;
+		
+		do{
+			int newHero = rand.nextInt(381) + 1;
+			newChar = Helper.characters.get(newHero-1);
+			
+			hasRelation = Boolean.FALSE;
+			for(Character c : villains.getTeam()){
+				Relation rel = relations[newHero-1][c.getId()-1];
+				if(rel != null) hasRelation = Boolean.TRUE;
+			}
+		}while(IsInTeam(team, newChar) && !hasRelation);
+		
+		Team newTeam = new Team();
+		copyTeam(newTeam, this);
+		
+		newTeam.getTeam().add(newChar);
+		newTeam.setSize(newTeam.getSize()+1);
+		newTeam.calculateAvgs();
+		return newTeam;
+	}
+	
 	public Team removeCharacter(){
 		Random rand = new Random();
-		int newHero = rand.nextInt(this.team.size()); 
+		int newHero = chooseRemoveCharacter(this);
 		Team newTeam = new Team();
 		copyTeam(newTeam, this);
 		
@@ -226,10 +251,10 @@ public class Team {
 	
 	public Team changeCharacter(){
 		Random rand = new Random();
-		int heroOut = rand.nextInt(this.team.size()); 
-		int heroIn = rand.nextInt(381) + 1; 
+		int heroOut = chooseRemoveCharacter(this); 
 		Character newChar;
 		do{
+			int heroIn = rand.nextInt(381) + 1; 
 			newChar = Helper.characters.get(heroIn-1);
 		}while(IsInTeam(team, newChar));
 		Team newTeam = new Team();
@@ -255,6 +280,36 @@ public class Team {
 	
 	public void printPg(){
 		System.out.println("Team: " + intelligence + "|" + strength + "|" + speed + "|" + durability + "|" + energy + "|" + fightingSkills + "|" + pgMed + "|" + popMed + "|" + size);
+	}
+	
+	private Integer chooseRemoveCharacter(Team heroes){
+		Double min = 1000000.0;
+		Double colaborattion = 0.0;
+		Double fightingExperience = 0.0;
+		
+		Integer indiceMin = 0;
+		
+		for(int i = 0; i < heroes.getTeam().size(); i++){
+			for(int j = 0; j < heroes.getTeam().size(); j++){
+				Relation rel = Helper.relations[heroes.getTeam().get(i).getId() - 1][heroes.getTeam().get(j).getId() - 1];
+				if(rel != null) colaborattion += rel.getNumberComics();
+			}
+			for(Character v : Helper.villains.getTeam()){
+				Relation rel = Helper.relations[heroes.getTeam().get(i).getId() - 1][v.getId() - 1];
+				if(rel != null) fightingExperience += rel.getNumberComics();
+			}
+			
+			Double sum = colaborattion + fightingExperience;
+			if(sum < min){
+				indiceMin = i;
+				min = sum;
+			}
+			
+			colaborattion = 0.0;
+			fightingExperience = 0.0;
+		}
+		
+		return indiceMin;
 	}
 
 }
